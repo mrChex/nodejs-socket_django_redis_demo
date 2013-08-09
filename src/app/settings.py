@@ -11,8 +11,8 @@ MANAGERS = ADMINS
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-#         'NAME': '',                      # Or path to database file if using sqlite3.
+#         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#         'NAME': 'database.sqlite3',                      # Or path to database file if using sqlite3.
 #         # The following settings are not used with sqlite3:
 #         'USER': '',
 #         'PASSWORD': '',
@@ -21,7 +21,7 @@ MANAGERS = ADMINS
 #     }
 # }
 
-SESSION_ENGINE = 'app.session'
+SESSION_ENGINE = 'redis_sessions.session'
 SESSION_REDIS_HOST = "127.0.0.1"
 SESSION_REDIS_PORT = 6379
 SESSION_REDIS_DB = 0
