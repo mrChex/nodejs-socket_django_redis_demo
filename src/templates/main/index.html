@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Django+Nodejs/socket.io+redis = <3</title>
+        <script src="http://127.0.0.1:8080/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        Добро пожаловать в мир магии! Случайное число для этой сессии: {{randomint}}
+        <script>
+            var socket = io.connect("http://127.0.0.1:8080");
+            socket.on("connect", function() {
+
+                console.log("socket connected. Do emit 'send'");
+
+                // make request to django via socket
+                socket.emit("send",
+
+                        // request options
+                        {"method": "post",  // request method to django
+                         "url": "/",  // url to django resource
+                         "csrftoken": "{{csrf_token}}",
+                         "data": {"key": "value"}}, // request data
+
+                        // callback. data is django respose json
+                        function(data, error) {
+                            console.log("django response(error:"+error+")", data)
+                        });
+
+            });
+
+            socket.on("django_message", function(data) {
+               console.log("We receive message from django!", data)
+            });
+        </script>
+    </body>
+</html>

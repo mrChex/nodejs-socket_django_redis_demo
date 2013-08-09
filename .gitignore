@@ -37,3 +37,4 @@ nosetests.xml
 .env
 logs
 nodejs/node_modules
+database.sqlite3
