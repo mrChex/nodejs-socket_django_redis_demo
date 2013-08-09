@@ -3,12 +3,10 @@ io = require('socket.io').listen 8080
 cookie_reader = require 'cookie'
 querystring = require 'querystring'
 http = require 'http'
-pickle = require 'pickle'  # for decoding stored django session data
-base64 = require 'base64'
 
 redis = require 'redis'
-client = redis.createClient()
-client2 = redis.createClient()
+client = redis.createClient()  # pub/sub
+client2 = redis.createClient()  # for queries
 
 
 io.configure ->
@@ -31,6 +29,7 @@ io.sockets.on 'connection', (socket)->
 		client2.get "DJANGO_SESSION::#{socket.handshake.cookie['sessionid']}", (err, reply)->
 			callback JSON.parse reply
 
+	# get 'secret_randomint' key from django session
 	socket.on 'get_secret', (fn)->
 		socket.get_session_data (data)-> fn data['secret_randomint']
 
