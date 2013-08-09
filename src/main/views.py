@@ -13,8 +13,6 @@ class Index(View):
 
     @render_to('main/index.html')
     def get(self, request):
-        # request.session['user'] = User()
-        print request.session['user']
         if not 'randomint' in request.session:
             import random
             request.session['randomint'] = random.randrange(0, 10)
@@ -24,9 +22,9 @@ class Index(View):
 
     @render_to('json')
     def post(self, request):
-        # redis_pub = redis.Redis(db=0)
-        # redis_pub.publish("nodejs", {"randomint": request.session['randomint'],
-        #                              "sended_via": "redis"})
+        redis_pub = redis.Redis(db=0)
+        redis_pub.publish("nodejs", {"randomint": request.session['randomint'],
+                                     "sended_via": "redis"})
 
         return {"randomint": request.session['randomint'],
                 "sended_via": "post response"}
