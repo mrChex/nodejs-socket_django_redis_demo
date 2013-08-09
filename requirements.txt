@@ -1,3 +1,4 @@
 django
 django-annoying
 hiredis
+django-redis-sessions
