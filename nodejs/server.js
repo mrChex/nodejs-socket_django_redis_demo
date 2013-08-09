@@ -31,16 +31,6 @@
   io.sockets.on('connection', function(socket) {
     var time;
     time = (new Date).toLocaleTimeString();
-    socket.get_session_data = function(callback) {
-      return client2.get("DJANGO_SESSION::" + socket.handshake.cookie['sessionid'], function(err, reply) {
-        return callback(JSON.parse(reply));
-      });
-    };
-    socket.on('get_secret', function(fn) {
-      return socket.get_session_data(function(data) {
-        return fn(data['secret_randomint']);
-      });
-    });
     return socket.on('send', function(options, fn) {
       var cookie, csrftoken, data, method, req, sessionid, url, values;
       method = options['method'] ? options['method'] : 'get';

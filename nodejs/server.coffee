@@ -24,16 +24,6 @@ io.configure ->
 io.sockets.on 'connection', (socket)->
 	time = (new Date).toLocaleTimeString()
 
-	# get stored django session data in redis
-	socket.get_session_data = (callback)->
-		client2.get "DJANGO_SESSION::#{socket.handshake.cookie['sessionid']}", (err, reply)->
-			callback JSON.parse reply
-
-	# get 'secret_randomint' key from django session
-	socket.on 'get_secret', (fn)->
-		socket.get_session_data (data)-> fn data['secret_randomint']
-
-
 	# proxy to django
 	socket.on 'send', (options, fn)->
 		method = if options['method'] then options['method'] else 'get'
